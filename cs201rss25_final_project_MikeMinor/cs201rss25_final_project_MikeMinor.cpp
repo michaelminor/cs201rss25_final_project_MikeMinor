@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 
+
+//just the main for calling the functions declared to have a functioning program.
 int main() {
     std::string correctAnswers;
     std::vector<StudentQuizInfo*> students;

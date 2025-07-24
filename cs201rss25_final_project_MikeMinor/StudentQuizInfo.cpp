@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iostream>
 
+//opens the file and prompts error if the file is wrong.
 void readQuizData(const std::string& filename, std::string& correctAnswers,
     std::vector<StudentQuizInfo*>& students) {
     std::ifstream inFile(filename);
@@ -13,6 +14,7 @@ void readQuizData(const std::string& filename, std::string& correctAnswers,
 
     std::getline(inFile, correctAnswers);  // First line: correct answers
 
+    //beings calculating which answers the student has correct based on the correct answers. closes file when complete
     std::string line;
     while (std::getline(inFile, line)) {
         std::istringstream iss(line);
@@ -26,6 +28,7 @@ void readQuizData(const std::string& filename, std::string& correctAnswers,
     inFile.close();
 }
 
+//function for comparing student answers to correct answers that is called above
 void calculateScores(const std::string& correctAnswers, StudentQuizInfo* studentPtr) {
     for (size_t i = 0; i < correctAnswers.size(); ++i) {
         if (i < studentPtr->studentAnswers.size() && studentPtr->studentAnswers[i] == correctAnswers[i]) {
@@ -34,6 +37,7 @@ void calculateScores(const std::string& correctAnswers, StudentQuizInfo* student
     }
 }
 
+//function that is used to oput the correct information to the output file. The student id and score (correct count) with headers of studentID and correctCount. Closes the file when finished.
 void writeResults(const std::string& filename, const std::vector<StudentQuizInfo*>& students) {
     std::ofstream outFile(filename);
     if (!outFile) {
@@ -43,12 +47,13 @@ void writeResults(const std::string& filename, const std::vector<StudentQuizInfo
 
     outFile << "STUD ID CORRECT\n";
     for (const auto& student : students) {
-        outFile << student->studentID << " " << student->correctCount << "\n";
+        outFile << student->studentID << "        " << student->correctCount << "\n";
     }
 
     outFile.close();
 }
 
+//clears any strange data
 void cleanUp(std::vector<StudentQuizInfo*>& students) {
     for (auto student : students) {
         delete student;

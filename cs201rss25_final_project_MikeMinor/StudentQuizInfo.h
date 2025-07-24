@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+//sets the structure for the student data
 struct StudentQuizInfo {
     int studentID;
     std::string studentAnswers;
